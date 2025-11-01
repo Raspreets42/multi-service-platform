@@ -1,0 +1,52 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>Multi Service Platform</h1>
+      <p>Welcome back! Please login to your account</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input
+          type="text"
+          id="username"
+          formControlName="username"
+          class="form-control"
+          [class.error]="f['username'].invalid && f['username'].touched"
+          placeholder="Enter your username">
+        <div class="error-message" *ngIf="f['username'].invalid && f['username'].touched">
+          Username is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          [class.error]="f['password'].invalid && f['password'].touched"
+          placeholder="Enter your password">
+        <div class="error-message" *ngIf="f['password'].invalid && f['password'].touched">
+          Password is required
+        </div>
+      </div>
+
+      <div class="error-alert" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <button type="submit" class="btn-login" [disabled]="loading">
+        <span *ngIf="!loading">Login</span>
+        <span *ngIf="loading">Logging in...</span>
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <p>Demo Credentials:</p>
+      <p class="demo-info">Username: admin | Password: admin123</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="role-toggle" *ngIf="currentUser">
+  <button class="role-toggle-btn" (click)="toggleDropdown()">
+    Switch Role
+    <span class="arrow">▼</span>
+  </button>
+
+  <div class="role-dropdown" *ngIf="showDropdown">
+    <button
+      *ngFor="let role of currentUser.roles"
+      class="role-option"
+      [class.active]="role === currentRole"
+      (click)="switchRole(role)">
+      {{ getRoleDisplayName(role) }}
+      <span *ngIf="role === currentRole" class="check-mark">✓</span>
+    </button>
+  </div>
+</div>

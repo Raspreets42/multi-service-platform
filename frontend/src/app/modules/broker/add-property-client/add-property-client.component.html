@@ -1,0 +1,70 @@
+<div class="form-container">
+  <div class="form-header">
+    <h1>{{ isEditMode ? 'Edit Client' : 'Add New Client' }}</h1>
+    <p>Fill in the client details</p>
+  </div>
+
+  <form [formGroup]="clientForm" (ngSubmit)="onSubmit()" class="client-form">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="clientName">Client Name *</label>
+        <input type="text" id="clientName" formControlName="clientName"
+               class="form-control" placeholder="Enter client name">
+        <div class="error-msg" *ngIf="clientForm.get('clientName')?.invalid && clientForm.get('clientName')?.touched">
+          Client name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="clientMobileNumber">Mobile Number *</label>
+        <input type="tel" id="clientMobileNumber" formControlName="clientMobileNumber"
+               class="form-control" placeholder="10-digit mobile number">
+        <div class="error-msg" *ngIf="clientForm.get('clientMobileNumber')?.invalid && clientForm.get('clientMobileNumber')?.touched">
+          Valid 10-digit mobile number required
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="clientAddress">Client Address *</label>
+        <textarea id="clientAddress" formControlName="clientAddress"
+                  class="form-control" rows="3" placeholder="Enter complete address"></textarea>
+        <div class="error-msg" *ngIf="clientForm.get('clientAddress')?.invalid && clientForm.get('clientAddress')?.touched">
+          Client address is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="clientBudget">Budget (₹/month) *</label>
+        <input type="number" id="clientBudget" formControlName="clientBudget"
+               class="form-control" placeholder="Enter budget">
+        <div class="error-msg" *ngIf="clientForm.get('clientBudget')?.invalid && clientForm.get('clientBudget')?.touched">
+          Valid budget required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="clientLookingForPropertyType">Looking For *</label>
+        <select id="clientLookingForPropertyType" formControlName="clientLookingForPropertyType" class="form-control">
+          <option value="">Select property type</option>
+          <option *ngFor="let type of propertyTypes" [value]="type">{{ type }}</option>
+        </select>
+        <div class="error-msg" *ngIf="clientForm.get('clientLookingForPropertyType')?.invalid && clientForm.get('clientLookingForPropertyType')?.touched">
+          Property type is required
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="clientImage">Client Image (Optional)</label>
+        <input type="file" id="clientImage" (change)="onFileSelect($event)"
+               accept="image/*" class="form-control-file">
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="cancel()">Cancel</button>
+      <button type="submit" class="btn-submit" [disabled]="loading">
+        {{ loading ? 'Saving...' : (isEditMode ? 'Update Client' : 'Add Client') }}
+      </button>
+    </div>
+  </form>
+</div>

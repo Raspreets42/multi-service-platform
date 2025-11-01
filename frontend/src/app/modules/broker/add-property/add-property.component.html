@@ -1,0 +1,83 @@
+<div class="form-container">
+  <div class="form-header">
+    <h1>{{ isEditMode ? 'Edit Property' : 'Add New Property' }}</h1>
+    <p>Fill in the property details</p>
+  </div>
+
+  <form [formGroup]="propertyForm" (ngSubmit)="onSubmit()" class="property-form">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="ownerName">Owner Name *</label>
+        <input type="text" id="ownerName" formControlName="ownerName"
+               class="form-control" placeholder="Enter owner name">
+        <div class="error-msg" *ngIf="propertyForm.get('ownerName')?.invalid && propertyForm.get('ownerName')?.touched">
+          Owner name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="ownerMobileNumber">Mobile Number *</label>
+        <input type="tel" id="ownerMobileNumber" formControlName="ownerMobileNumber"
+               class="form-control" placeholder="10-digit mobile number">
+        <div class="error-msg" *ngIf="propertyForm.get('ownerMobileNumber')?.invalid && propertyForm.get('ownerMobileNumber')?.touched">
+          Valid 10-digit mobile number required
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="propertyAddress">Property Address *</label>
+        <textarea id="propertyAddress" formControlName="propertyAddress"
+                  class="form-control" rows="3" placeholder="Enter complete address"></textarea>
+        <div class="error-msg" *ngIf="propertyForm.get('propertyAddress')?.invalid && propertyForm.get('propertyAddress')?.touched">
+          Property address is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="propertyRent">Monthly Rent (₹) *</label>
+        <input type="number" id="propertyRent" formControlName="propertyRent"
+               class="form-control" placeholder="Enter rent amount">
+        <div class="error-msg" *ngIf="propertyForm.get('propertyRent')?.invalid && propertyForm.get('propertyRent')?.touched">
+          Valid rent amount required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="propertyType">Property Type *</label>
+        <select id="propertyType" formControlName="propertyType" class="form-control">
+          <option value="">Select type</option>
+          <option *ngFor="let type of propertyTypes" [value]="type">{{ type }}</option>
+        </select>
+        <div class="error-msg" *ngIf="propertyForm.get('propertyType')?.invalid && propertyForm.get('propertyType')?.touched">
+          Property type is required
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="propertyDescription">Description</label>
+        <textarea id="propertyDescription" formControlName="propertyDescription"
+                  class="form-control" rows="4" placeholder="Additional details about the property"></textarea>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="propertyMedia">Property Images/Videos</label>
+        <input type="file" id="propertyMedia" (change)="onFileSelect($event, 'property')"
+               multiple accept="image/*,video/*" class="form-control-file">
+        <small>You can select multiple images or videos</small>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="ownerImage">Owner Image (Optional)</label>
+        <input type="file" id="ownerImage" (change)="onFileSelect($event, 'owner')"
+               accept="image/*" class="form-control-file">
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="cancel()">Cancel</button>
+      <button type="submit" class="btn-submit" [disabled]="loading">
+        {{ loading ? 'Saving...' : (isEditMode ? 'Update Property' : 'Add Property') }}
+      </button>
+    </div>
+  </form>
+</div>

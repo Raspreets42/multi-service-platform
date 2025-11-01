@@ -1,0 +1,36 @@
+<nav class="navbar">
+  <div class="navbar-container">
+    <div class="navbar-brand">
+      <h2>Multi Service Platform</h2>
+    </div>
+
+    <button class="mobile-menu-toggle" (click)="toggleMobileMenu()">
+      ☰
+    </button>
+
+    <div class="navbar-menu" [class.active]="showMobileMenu">
+      <ng-container *ngIf="currentUser">
+        <div class="navbar-links">
+          <a *ngIf="currentRole === 'broker'" routerLink="/broker/dashboard" routerLinkActive="active">
+            Broker Dashboard
+          </a>
+          <a *ngIf="currentRole === 'driver'" routerLink="/driver/dashboard" routerLinkActive="active">
+            Driver Dashboard
+          </a>
+          <a *ngIf="currentRole === 'caterer'" routerLink="/mess/dashboard" routerLinkActive="active">
+            Mess Dashboard
+          </a>
+        </div>
+
+        <div class="navbar-actions">
+          <app-role-toggle *ngIf="currentUser.roles.length > 1"></app-role-toggle>
+          <div class="user-info">
+            <span class="username">{{ currentUser.username }}</span>
+            <span class="role-badge">{{ currentRole }}</span>
+          </div>
+          <button class="btn-logout" (click)="logout()">Logout</button>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,80 @@
+<div class="form-container">
+  <div class="form-header">
+    <h1>{{ isEditMode ? 'Edit Vehicle' : 'Add New Vehicle' }}</h1>
+    <p>Fill in the vehicle and driver details</p>
+  </div>
+
+  <form [formGroup]="vehicleForm" (ngSubmit)="onSubmit()" class="vehicle-form">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="driverName">Driver Name *</label>
+        <input type="text" id="driverName" formControlName="driverName"
+               class="form-control" placeholder="Enter driver name">
+        <div class="error-msg" *ngIf="vehicleForm.get('driverName')?.invalid && vehicleForm.get('driverName')?.touched">
+          Driver name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="driverMobileNumber">Mobile Number *</label>
+        <input type="tel" id="driverMobileNumber" formControlName="driverMobileNumber"
+               class="form-control" placeholder="10-digit mobile number">
+        <div class="error-msg" *ngIf="vehicleForm.get('driverMobileNumber')?.invalid && vehicleForm.get('driverMobileNumber')?.touched">
+          Valid 10-digit mobile number required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="driverVehicleNumber">Vehicle Number *</label>
+        <input type="text" id="driverVehicleNumber" formControlName="driverVehicleNumber"
+               class="form-control" placeholder="e.g., MH12AB1234" style="text-transform: uppercase;">
+        <div class="error-msg" *ngIf="vehicleForm.get('driverVehicleNumber')?.invalid && vehicleForm.get('driverVehicleNumber')?.touched">
+          Vehicle number is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="driverFare">Daily Fare (₹) *</label>
+        <input type="number" id="driverFare" formControlName="driverFare"
+               class="form-control" placeholder="Enter daily fare">
+        <div class="error-msg" *ngIf="vehicleForm.get('driverFare')?.invalid && vehicleForm.get('driverFare')?.touched">
+          Valid fare amount required
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="driverAddress">Driver Address *</label>
+        <textarea id="driverAddress" formControlName="driverAddress"
+                  class="form-control" rows="3" placeholder="Enter complete address"></textarea>
+        <div class="error-msg" *ngIf="vehicleForm.get('driverAddress')?.invalid && vehicleForm.get('driverAddress')?.touched">
+          Driver address is required
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="driverDescription">Description</label>
+        <textarea id="driverDescription" formControlName="driverDescription"
+                  class="form-control" rows="4" placeholder="Additional details about driver/vehicle"></textarea>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="driverImage">Driver Image (Optional)</label>
+        <input type="file" id="driverImage" (change)="onFileSelect($event, 'driver')"
+               accept="image/*" class="form-control-file">
+      </div>
+
+      <div class="form-group full-width">
+        <label for="vehicleImage">Vehicle Image (Optional)</label>
+        <input type="file" id="vehicleImage" (change)="onFileSelect($event, 'vehicle')"
+               accept="image/*" class="form-control-file">
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="cancel()">Cancel</button>
+      <button type="submit" class="btn-submit" [disabled]="loading">
+        {{ loading ? 'Saving...' : (isEditMode ? 'Update Vehicle' : 'Add Vehicle') }}
+      </button>
+    </div>
+  </form>
+</div>

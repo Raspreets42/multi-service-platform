@@ -1,0 +1,65 @@
+<div class="form-container">
+  <div class="form-header">
+    <h1>{{ isEditMode ? 'Edit Caterer' : 'Add New Caterer' }}</h1>
+    <p>Fill in the caterer details</p>
+  </div>
+
+  <form [formGroup]="catererForm" (ngSubmit)="onSubmit()" class="caterer-form">
+    <div class="form-grid">
+      <div class="form-group">
+        <label for="catererName">Caterer Name *</label>
+        <input type="text" id="catererName" formControlName="catererName"
+               class="form-control" placeholder="Enter caterer name">
+        <div class="error-msg" *ngIf="catererForm.get('catererName')?.invalid && catererForm.get('catererName')?.touched">
+          Caterer name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="catererMobileNumber">Mobile Number *</label>
+        <input type="tel" id="catererMobileNumber" formControlName="catererMobileNumber"
+               class="form-control" placeholder="10-digit mobile number">
+        <div class="error-msg" *ngIf="catererForm.get('catererMobileNumber')?.invalid && catererForm.get('catererMobileNumber')?.touched">
+          Valid 10-digit mobile number required
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="catererAddress">Caterer Address *</label>
+        <textarea id="catererAddress" formControlName="catererAddress"
+                  class="form-control" rows="3" placeholder="Enter complete address"></textarea>
+        <div class="error-msg" *ngIf="catererForm.get('catererAddress')?.invalid && catererForm.get('catererAddress')?.touched">
+          Caterer address is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="catererFare">Monthly Fare (₹) *</label>
+        <input type="number" id="catererFare" formControlName="catererFare"
+               class="form-control" placeholder="Enter monthly fare">
+        <div class="error-msg" *ngIf="catererForm.get('catererFare')?.invalid && catererForm.get('catererFare')?.touched">
+          Valid fare amount required
+        </div>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="catererDescription">Description</label>
+        <textarea id="catererDescription" formControlName="catererDescription"
+                  class="form-control" rows="4" placeholder="Menu details, specialties, etc."></textarea>
+      </div>
+
+      <div class="form-group full-width">
+        <label for="catererImage">Caterer Image (Optional)</label>
+        <input type="file" id="catererImage" (change)="onFileSelect($event)"
+               accept="image/*" class="form-control-file">
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="cancel()">Cancel</button>
+      <button type="submit" class="btn-submit" [disabled]="loading">
+        {{ loading ? 'Saving...' : (isEditMode ? 'Update Caterer' : 'Add Caterer') }}
+      </button>
+    </div>
+  </form>
+</div>

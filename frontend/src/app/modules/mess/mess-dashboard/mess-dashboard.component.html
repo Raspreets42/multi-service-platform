@@ -1,0 +1,89 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Mess Dashboard</h1>
+    <p>Manage your caterers and tiffin clients</p>
+  </div>
+
+  <div class="tabs">
+    <button
+      class="tab-btn"
+      [class.active]="activeTab === 'caterers'"
+      (click)="setActiveTab('caterers')">
+      Caterers ({{ caterers.length }})
+    </button>
+    <button
+      class="tab-btn"
+      [class.active]="activeTab === 'clients'"
+      (click)="setActiveTab('clients')">
+      Clients ({{ clients.length }})
+    </button>
+  </div>
+
+  <!-- Caterers Tab -->
+  <div class="tab-content" *ngIf="activeTab === 'caterers'">
+    <div class="content-header">
+      <h2>Caterer Listings</h2>
+      <button class="btn-primary" (click)="addCaterer()">
+        + Add Caterer
+      </button>
+    </div>
+
+    <div class="loading" *ngIf="loading">Loading caterers...</div>
+
+    <div class="cards-grid" *ngIf="!loading && caterers.length > 0">
+      <div class="card" *ngFor="let caterer of caterers">
+        <div class="card-image" *ngIf="caterer.catererImage">
+          <img [src]="getImageUrl(caterer.catererImage)" alt="Caterer">
+        </div>
+        <div class="card-content">
+          <h3>{{ caterer.catererName }}</h3>
+          <p class="address">{{ caterer.catererAddress }}</p>
+          <p class="fare">₹{{ caterer.catererFare }}/month</p>
+          <p class="contact">📞 {{ caterer.catererMobileNumber }}</p>
+          <p class="description">{{ caterer.catererDescription }}</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn-edit" (click)="editCaterer(caterer)">Edit</button>
+          <button class="btn-delete" (click)="deleteCaterer(caterer._id!)">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="!loading && caterers.length === 0">
+      <p>No caterers added yet. Click "Add Caterer" to get started.</p>
+    </div>
+  </div>
+
+  <!-- Clients Tab -->
+  <div class="tab-content" *ngIf="activeTab === 'clients'">
+    <div class="content-header">
+      <h2>Client Requests</h2>
+      <button class="btn-primary" (click)="addClient()">
+        + Add Client
+      </button>
+    </div>
+
+    <div class="cards-grid" *ngIf="clients.length > 0">
+      <div class="card" *ngFor="let client of clients">
+        <div class="card-image" *ngIf="client.clientImage">
+          <img [src]="getImageUrl(client.clientImage)" alt="Client">
+        </div>
+        <div class="card-content">
+          <h3>{{ client.clientName }}</h3>
+          <p class="address">{{ client.clientAddress }}</p>
+          <p class="budget">Budget: ₹{{ client.clientFareBudget }}/month</p>
+          <p class="contact">📞 {{ client.clientMobileNumber }}</p>
+          <p class="description">{{ client.clientDescription }}</p>
+        </div>
+        <div class="card-actions">
+          <button class="btn-edit" (click)="editClient(client)">Edit</button>
+          <button class="btn-delete" (click)="deleteClient(client._id!)">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-state" *ngIf="clients.length === 0">
+      <p>No clients added yet. Click "Add Client" to get started.</p>
+    </div>
+  </div>
+</div>
